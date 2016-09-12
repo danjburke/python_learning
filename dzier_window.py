@@ -9,9 +9,13 @@
 # Import library to read HTML pages
 import urllib
 # Import library for regular expressions
-import re, sys
+import re, sys, datetime
 
+# Read in zipcode
 zip = sys.argv[1]
+
+# Get current time
+now = datetime.datetime.now()
 
 # Read weather site to get current pollen level
 sock = urllib.urlopen("https://www.wunderground.com/DisplayPollen.asp?Zipcode=" + zip)
@@ -35,6 +39,14 @@ for line in sock2:
     temp = re.findall("temp_now:",line)
     if len(temp) > 0:
         temp_val = re.findall('\d+\.\d',line)[0]
+
+# Output values to screen
+print "Current weather conditions for " + zip
+print "Last update: ", now, "\n"
+print "Current temperature: " + temp_val
+print "Current humidity: " + humidity_val + "%"
+print "Current pollen level: " + curr_pollen_level
+
 
 # Output values to screen
 print "Current weather conditions for " + zip + "\n"
